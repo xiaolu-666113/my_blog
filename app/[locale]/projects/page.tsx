@@ -1,0 +1,50 @@
+import { ProjectCard } from "@/components/cards/ProjectCard";
+import { getAllProjects } from "@/lib/content/projects";
+import { createMetadata } from "@/lib/seo/metadata";
+import { getDictionary } from "@/lib/i18n/routing";
+import { isLocale, type Locale } from "@/lib/i18n/locales";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const resolvedLocale = isLocale(locale) ? locale : "zh";
+  const dict = getDictionary(resolvedLocale);
+  return createMetadata({
+    title: dict.nav.projects,
+    description: dict.sections.featuredProjects,
+    locale: resolvedLocale,
+    path: `/${resolvedLocale}/projects`,
+  });
+}
+
+export default async function ProjectsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const resolvedLocale = isLocale(locale) ? locale : "zh";
+  const dict = getDictionary(resolvedLocale);
+  const items = getAllProjects(resolvedLocale);
+
+  return (
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-3xl font-semibold tracking-tight">
+          {dict.nav.projects}
+        </h1>
+        <p className="mt-2 text-base text-muted-foreground">
+          {dict.sections.featuredProjects}
+        </p>
+      </div>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {items.map((item) => (
+          <ProjectCard key={item.slug} item={item} locale={resolvedLocale} />
+        ))}
+      </div>
+    </div>
+  );
+}

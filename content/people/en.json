@@ -1,0 +1,57 @@
+{
+  "name": "Your Name",
+  "headline": "Researcher building reliable product systems",
+  "bio": "I focus on AI systems, product engineering, and information design, translating research into clear user experiences.",
+  "photos": ["/avatar/portrait.svg"],
+  "timeline": [
+    {
+      "date": "2025",
+      "title": "Research Lead, AI Lab",
+      "description": "Led retrieval and interpretability initiatives from prototype to product.",
+      "links": [
+        { "label": "Lab", "url": "https://example.com" }
+      ]
+    },
+    {
+      "date": "2023",
+      "title": "M.S. in Computer Science",
+      "description": "Focus on knowledge augmentation, dialog systems, and systems engineering."
+    }
+  ],
+  "skills": [
+    {
+      "category": "Research",
+      "items": ["LLM Systems", "Retrieval", "Evaluation"]
+    },
+    {
+      "category": "Engineering",
+      "items": ["Next.js", "TypeScript", "Python", "MLOps"]
+    },
+    {
+      "category": "Design",
+      "items": ["Product Strategy", "Information Architecture", "Data Visualization"]
+    }
+  ],
+  "contacts": [
+    {
+      "label": "Email",
+      "value": "hello@example.com",
+      "url": "mailto:hello@example.com"
+    },
+    {
+      "label": "GitHub",
+      "value": "github.com/your-handle",
+      "url": "https://github.com/your-handle"
+    },
+    {
+      "label": "LinkedIn",
+      "value": "linkedin.com/in/your-handle",
+      "url": "https://linkedin.com/in/your-handle"
+    },
+    {
+      "label": "Scholar",
+      "value": "scholar.google.com",
+      "url": "https://scholar.google.com"
+    }
+  ]
+}

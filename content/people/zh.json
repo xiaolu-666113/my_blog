@@ -1,0 +1,57 @@
+{
+  "name": "Your Name",
+  "headline": "研究与工程的交叉探索者",
+  "bio": "我关注 AI 系统、产品工程与信息设计的融合，擅长把研究思路转化为清晰的产品体验。",
+  "photos": ["/avatar/portrait.svg"],
+  "timeline": [
+    {
+      "date": "2025",
+      "title": "Research Lead, AI Lab",
+      "description": "聚焦检索增强与可解释性方向，带领项目从原型走向产品。",
+      "links": [
+        { "label": "Lab", "url": "https://example.com" }
+      ]
+    },
+    {
+      "date": "2023",
+      "title": "M.S. in Computer Science",
+      "description": "研究方向：知识增强、对话系统与系统工程。"
+    }
+  ],
+  "skills": [
+    {
+      "category": "Research",
+      "items": ["LLM Systems", "Retrieval", "Evaluation"]
+    },
+    {
+      "category": "Engineering",
+      "items": ["Next.js", "TypeScript", "Python", "MLOps"]
+    },
+    {
+      "category": "Design",
+      "items": ["Product Strategy", "Information Architecture", "Data Visualization"]
+    }
+  ],
+  "contacts": [
+    {
+      "label": "Email",
+      "value": "hello@example.com",
+      "url": "mailto:hello@example.com"
+    },
+    {
+      "label": "GitHub",
+      "value": "github.com/your-handle",
+      "url": "https://github.com/your-handle"
+    },
+    {
+      "label": "LinkedIn",
+      "value": "linkedin.com/in/your-handle",
+      "url": "https://linkedin.com/in/your-handle"
+    },
+    {
+      "label": "Scholar",
+      "value": "scholar.google.com",
+      "url": "https://scholar.google.com"
+    }
+  ]
+}
