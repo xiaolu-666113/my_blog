@@ -1,8 +1,10 @@
 import { ProjectCard } from "@/components/cards/ProjectCard";
+import { InternshipSection } from "@/components/sections/InternshipSection";
 import { getAllProjects } from "@/lib/content/projects";
+import { getPerson } from "@/lib/content/people";
 import { createMetadata } from "@/lib/seo/metadata";
 import { getDictionary } from "@/lib/i18n/routing";
-import { isLocale, type Locale } from "@/lib/i18n/locales";
+import { isLocale } from "@/lib/i18n/locales";
 
 export async function generateMetadata({
   params,
@@ -29,6 +31,8 @@ export default async function ProjectsPage({
   const resolvedLocale = isLocale(locale) ? locale : "zh";
   const dict = getDictionary(resolvedLocale);
   const items = getAllProjects(resolvedLocale);
+  const person = getPerson(resolvedLocale);
+  const internships = person.internships ?? [];
 
   return (
     <div className="space-y-8">
@@ -40,6 +44,7 @@ export default async function ProjectsPage({
           {dict.sections.featuredProjects}
         </p>
       </div>
+      <InternshipSection locale={resolvedLocale} internships={internships} />
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => (
           <ProjectCard key={item.slug} item={item} locale={resolvedLocale} />

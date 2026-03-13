@@ -1,0 +1,318 @@
+---
+title: "Explainable Innovation Engine: Turning RAG from Evidence Lookup into Method Discovery"
+date: "2026-03"
+summary: "An Agent-RAG framework that organizes knowledge as method nodes with dual-tree indexing, strategy-guided synthesis, and verification-based pruning, enabling explainable and controllable innovation."
+tags: ["RAG", "Agent", "Knowledge Graph", "Hierarchical Retrieval", "Explainability", "Verification", "Scientific Discovery"]
+status: "Ongoing"
+role: "First author"
+links:
+  paper: "https://example.com/paper"
+  code: "https://github.com/your-handle/explainable-innovation-engine"
+cover: "/covers/workflow.png"
+---
+
+# What This Research Tries to Do: Not Just Answer Questions, but Innovate — and Explain How
+
+If you've used traditional **Retrieval-Augmented Generation (RAG)** systems, you probably feel both reassured and frustrated at the same time.
+
+- Reassured: the model at least *looks things up* instead of hallucinating everything.
+- Frustrated: the retrieved chunks often feel like shredded paper — enough to answer simple questions, but not enough to **derive new ideas, reuse methods, or build reasoning chains**.
+
+The idea behind this work is straightforward:
+
+> Instead of retrieving **text fragments**, we retrieve **reusable method units**, allowing an agent to combine them into new methods along an interpretable reasoning chain.
+
+The system then **filters weak innovations and keeps strong ones**, writing them back into the knowledge base so the system can continuously improve.
+
+In other words, this is not just a question-answering system — it's a **self-improving innovation engine**.
+
+---
+
+# Why Traditional RAG Is Not Enough
+
+The typical RAG pipeline looks like this:
+
+1. Split documents into chunks  
+2. Retrieve top-k chunks via vector similarity  
+3. Concatenate them as context  
+4. Generate an answer with an LLM  
+
+The problem is simple: **chunks are not methods**.
+
+When solving tasks that require structured reasoning (mathematics, system design, scientific synthesis), chunk-based retrieval suffers from several issues:
+
+- **Broken dependencies**: the premise of a method might appear in one section while its result appears elsewhere.
+- **Poor global coverage**: top-k retrieval captures local similarity rather than the global structure of knowledge.
+- **Limited reuse**: chunks are hard to recombine into reusable reasoning units.
+
+Previous work already hints at the solution.
+
+- **RAPTOR** constructs hierarchical summary trees for long-document retrieval.
+- **GraphRAG** organizes knowledge as graphs with community summaries.
+
+Both approaches show that **structured retrieval works better than flat retrieval**.
+
+---
+
+![workflow](/research/creation_agent/workflow.png)
+
+# The Core Idea: From Chunks to Methods-as-Nodes
+
+My approach replaces the fundamental retrieval unit.
+
+> Instead of retrieving text chunks, the system retrieves **method nodes**.
+
+A **method node** could represent:
+
+- a model architecture or training paradigm  
+- a theorem or proof technique  
+- an experimental design pattern  
+- a reasoning operator such as induction, deduction, or analogy  
+
+To organize these nodes, the knowledge base is structured into **two complementary trees**.
+
+---
+
+# The Dual-Tree Knowledge Structure
+
+## 1. Method Provenance Tree \(T_M\)
+
+This tree explicitly represents **how methods derive from previous methods**.
+
+- **Nodes**: method units  
+- **Edges**: method → derived method relationships  
+- **Edge weights**: contribution scores in \([0,1]\)
+
+In reality, knowledge forms a DAG with multiple contributing parents.  
+However, for efficient retrieval and visualization, the system keeps the **highest-weight parent as the primary edge**, while additional edges are stored as supporting evidence.
+
+In short:
+
+> This tree explains *where each method comes from and how it evolved*.
+
+---
+
+## 2. Clustering Abstraction Tree \(T_C\)
+
+The second tree acts like a **navigation map**.
+
+- Leaves: method nodes  
+- Intermediate nodes: clustered groups of related methods  
+- Each cluster has an **LLM-generated summary**
+
+Moving upward gives **more abstract themes**, while moving downward leads to **concrete methods**.
+
+This solves two problems:
+
+- quickly locating relevant areas of knowledge  
+- navigating from abstract topics to detailed methods
+
+![workflow](/research/creation_agent/tree.png)
+
+---
+
+# The Online Reasoning Loop
+
+When a user query arrives, the system runs a **closed-loop reasoning process** rather than a single retrieval step.
+
+## Step A: Funnel Retrieval
+
+Search starts at the top level of \(T_C\).
+
+The system compares the query embedding with cluster summaries and gradually descends toward leaf methods.
+
+A **decaying selection budget** controls the search:
+
+- wide exploration at high levels  
+- narrow selection at deeper levels  
+
+This prevents exponential branching while maintaining recall.
+
+---
+
+## Step B: Weighted Ancestral Backtracking
+
+After retrieving leaf methods \( \mathcal{M}_q \), the system traces back their ancestors in the provenance tree.
+
+Instead of using a fixed depth, the algorithm adapts based on edge weights:
+
+> stronger contributions → deeper tracing  
+> weaker contributions → early stopping
+
+This ensures that the context includes **important reasoning chains without excessive noise**.
+
+---
+
+## Step C: Strategy Agent for Innovation
+
+Innovation is handled through a **library of methodological operators**:
+
+- Deduction
+- Induction
+- Analogy
+- Abduction
+
+The **strategy agent** selects appropriate operators based on the query and generates multiple candidate innovations.
+
+Each candidate must provide:
+
+- a concise summary  
+- attributed parent methods  
+- explanation of contributions  
+- novelty compared to prior methods  
+- applicability boundaries  
+- a validation plan  
+
+The entire reasoning path is recorded as an **auditable trajectory**.
+
+---
+
+## Step D: Verification and Pruning
+
+Not every innovation is useful.
+
+Each candidate is evaluated across several dimensions:
+
+- Novelty  
+- Consistency and explainability  
+- Verifiability  
+- Applicability boundaries  
+- Alignment with the user goal  
+
+Low-quality results are removed.
+
+High-quality results are **written back into the knowledge base**, allowing the system to grow over time.
+
+In domains like mathematics or geometry, the system can optionally integrate **formal verification tools** such as Lean or Isabelle.
+
+---
+
+# Experimental Evaluation
+
+To evaluate the system, I designed a **human expert assessment protocol**.
+
+- 6 domains: Mathematics, Physics, Computer Science, Biology, Chemistry, Sociology  
+- 100 questions per domain (600 total)  
+- 4 backbone models  
+- Expert blind evaluation  
+
+Each answer was scored on:
+
+- Novelty  
+- Correctness  
+- Usefulness  
+- Explainability  
+
+These scores were combined into a weighted final metric.
+
+---
+
+# Key Findings
+
+Two interesting patterns emerged.
+
+### Absolute performance
+
+Sociology achieved the highest absolute scores, while mathematics had the lowest.
+
+This makes sense:
+
+- social science tasks rely more on conceptual synthesis
+- mathematical reasoning requires extremely precise derivations
+
+### Relative improvement
+
+However, the **largest improvement appears in mathematics**.
+
+Why?
+
+Because baseline systems often fail due to **broken reasoning chains**.
+
+The structured method graph and pruning mechanism significantly reduce these failures.
+
+In short:
+
+> The harder the reasoning task, the more valuable structured method retrieval becomes.
+
+---
+
+# Ablation Studies
+
+To understand which components matter most, I removed modules one by one:
+
+- removing the methodological operator library \( \Phi \)
+- removing ancestral backtracking
+- using fixed backtracking depth
+- removing pruning thresholds
+
+The results were domain-dependent.
+
+- Sociology relies heavily on **methodological operators**
+- Mathematics relies heavily on **ancestral backtracking and pruning**
+
+---
+
+# Cost–Quality Trade-offs
+
+I also analyzed how system parameters affect performance:
+
+- number of retrieval layers \(n\)
+- selection budget \(k_1\)
+- number of generated candidates \(j\)
+
+Increasing these improves quality — but only up to a point.
+
+The quality curve quickly saturates, while token cost grows roughly linearly.
+
+This creates a **Pareto frontier**, allowing practitioners to select a cost-effective operating point.
+
+---
+
+# A Curious Experiment: Unsupervised Self-Evolution
+
+One of the most interesting experiments was letting the system **run without explicit tasks**.
+
+The agent generated questions, built new nodes, and wrote results back into its own knowledge base.
+
+Three patterns emerged:
+
+1. **Long periods of stagnation**  
+   The system recombines existing ideas without major progress.
+
+2. **Occasional breakthroughs**  
+   When a key node appears, the knowledge graph expands rapidly.
+
+3. **A major risk: lack of falsification**
+
+If incorrect conclusions are written back into the knowledge base, they can propagate and amplify over time.
+
+This suggests that a future version of the system should include a **Falsifier Agent** to periodically search for contradictions.
+
+Interestingly, without ethical constraints, the system quickly proposed biologically unethical experiments — highlighting that pure optimization does not naturally encode ethics.
+
+---
+
+# What This Work Contributes
+
+In one sentence:
+
+> This work transforms RAG from retrieving text fragments into retrieving and composing structured methods, enabling innovation that is explainable, controllable, verifiable, and continuously evolving.
+
+---
+
+# Future Directions
+
+There are three directions I’m particularly excited about:
+
+1. **Falsification agents**  
+   Systems that actively search for contradictions and correct earlier conclusions.
+
+2. **Stronger formal verification**  
+   Integrating theorem provers to ensure correctness in mathematical reasoning.
+
+3. **Stricter reproducible evaluation**  
+   Adding stronger baselines such as chunk-RAG, RAPTOR, and GraphRAG.
+
+---
+
+If you are interested in **making AI systems capable of innovation while remaining interpretable**, feel free to reach out.

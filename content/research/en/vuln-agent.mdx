@@ -1,0 +1,121 @@
+---
+title: "VulnAgent-X: From One-Shot Vulnerability Guessing to Evidence-Grounded Agentic Auditing"
+date: "2026-03"
+summary: "A layered multi-agent workflow for repository-level bug and vulnerability detection: risk triage → context expansion → specialist agents → selective verification → evidence fusion, aiming for higher recall, fewer false positives, and better interpretability."
+tags: ["Security", "Vulnerability Detection", "Agents", "LLM", "Code Intelligence", "Repository-level", "Verification", "Explainability"]
+status: "Ongoing"
+role: "First author"
+links:
+  paper: "https://example.com/paper"
+  code: "https://github.com/your-handle/vulnagent-x"
+cover: "/covers/workflow_Vulnagent.png"
+---
+
+## Background: Why vulnerability detection is hard
+
+Vulnerabilities rarely live in a single line of code. In real repositories, security issues often depend on:
+
+- **Interprocedural flows** (source → sink across functions/files)
+- **Configurations and policies** (authz rules, env vars, feature flags)
+- **Runtime conditions** (only triggered by specific inputs/states)
+- **Project-specific conventions** (custom sanitizers, wrappers, guards)
+
+This is why one-shot “LLM code review” typically fails in two ways:
+1) **False negatives**: the model lacks the right context.  
+2) **False positives**: the model produces a plausible story without strong evidence (unreachable paths, already-sanitized inputs, etc.).
+
+## Problem: The ceiling of one-shot LLM auditing
+
+Even with strong code models, practical auditing still suffers from:
+- **Insufficient context** for real data/control flows
+- **No verification** to distinguish “suspicious” from “exploitable”
+- **No counter-evidence** mechanisms to challenge claims
+- **Weak interpretability** (conclusions without a defensible evidence trail)
+
+So the key question becomes:
+> Can we turn vulnerability detection into a reproducible auditing loop that collects evidence, validates hypotheses, and produces actionable, review-ready findings?
+
+## Method: VulnAgent-X (layered agents + evidence-driven decisions)
+
+VulnAgent-X decomposes detection into five stages:
+
+### 1) Fast Risk Screening
+Low-cost triage to reduce the search space:
+- lightweight static signals (dangerous APIs, missing checks)
+- change metadata (auth modules, input processing, config diffs)
+- lightweight model scoring
+
+Only the Top-K regions proceed to deeper analysis.
+
+### 2) Context Expansion (minimal sufficient context)
+Instead of dumping the whole repo into the model, we retrieve a bounded, relevant context:
+- callers/callees (call chain)
+- configs and policy definitions
+- tests and exception handling
+- similar historical fixes
+
+Goal: **enough evidence, minimal noise.**
+
+### 3) Multi-Agent Collaborative Analysis
+Specialised agents analyse the same target from complementary viewpoints:
+
+- **Router Agent**: categorises the issue and dispatches experts  
+- **Semantic Agent**: control flow, boundaries, exception logic  
+- **Security Agent**: source→sink reasoning, injection/authz risks, dangerous sinks  
+- **Logic Bug Agent**: state/ordering/transaction/concurrency failures  
+- **Sceptic Agent**: searches for counter-evidence (unreachability, sanitisation, constraints)
+
+This is not “more text”. It is **structured evidence collection and adversarial cross-checking**.
+
+### 4) Selective Dynamic Verification
+For high-risk or uncertain cases, a verification step generates:
+- minimal repro inputs / payloads
+- unit or regression tests
+- bounded execution traces (if sandboxed execution is allowed)
+
+This helps distinguish “looks vulnerable” from “is triggerable”.
+
+### 5) Evidence Fusion
+Final decisions are made via evidence aggregation:
+- static + contextual + cross-agent agreement + dynamic signals
+- minus counter-evidence
+
+Outputs are structured findings:
+- type, file/line localisation
+- evidence trail (e.g., source→sink path)
+- confidence and severity
+- fix hints and regression test suggestions
+
+## Experiments: How we validate it
+
+We evaluate:
+1) **Detection quality**: Precision/Recall/F1/AUROC  
+2) **Localisation**: Top-1/Top-3/MRR  
+3) **Practical cost**: tokens, latency, verification rate, early-exit rate
+
+Public benchmarks (function-level + commit-level):
+- Devign
+- Big-Vul
+- PrimeVul (more realistic evaluation settings)
+- a just-in-time commit-level benchmark (detection + localisation)
+
+### What the figures highlight
+- **Pareto plot**: performance vs cost, showing the benefit of layered escalation  
+- **Sensitivity curves**: performance saturates with larger K/context budgets while cost grows  
+- **Threshold effects**: how confidence thresholds trade off quality vs verification cost  
+- **Error breakdown**: environment-dependent semantics and missing helper-function meaning remain major failure modes
+
+## Key takeaways
+
+- The main bottleneck is often not “understanding code tokens” but **collecting and validating evidence**.
+- A staged workflow (triage → context → specialists → verification → fusion) improves reliability and interpretability.
+- A dedicated sceptic/counter-evidence step is crucial for suppressing false positives.
+- Verification can be selective: targeting only high-risk/uncertain cases yields strong gains without always paying full execution cost.
+
+## Limitations and next steps
+
+- Environment-dependent vulnerabilities remain hard without stronger execution context.
+- Dataset label noise can distort evaluation; auditing-style evaluation is preferable.
+- Next steps include tighter integration into PR review workflows (review comments, patch diffs, and auto-generated regression tests).
+
+Links to the paper and code are provided in the header.

@@ -1,8 +1,60 @@
 {
-  "name": "Your Name",
+  "name": "Renwei Meng",
   "headline": "Researcher building reliable product systems",
   "bio": "I focus on AI systems, product engineering, and information design, translating research into clear user experiences.",
-  "photos": ["/avatar/portrait.svg"],
+  "photos": ["/avatar/my_profile.JPG"],
+  "education": [
+    {
+      "degree": "B.Eng. (Undergraduate)",
+      "school": "Anhui University",
+      "major": "digital media technology",
+      "start": "2023",
+      "end": "2027",
+      "description": "Built a strong foundation in algorithms, computer vision, and machine learning, while leading research-oriented engineering projects.",
+      "achievements": ["Strong core GPA", "Led undergraduate research training", "University innovation grant project"],
+      "detail": {
+        "schoolIntro": "Anhui University is a Double First-Class university with strong emphasis on innovation, engineering practice, and interdisciplinary learning.",
+        "majorIntro": "Digital Media Technology combines computer science, interactive systems, and intelligent media engineering to build both technical depth and creative capability.",
+        "curriculum": {
+          "math": ["Calculus", "Linear Algebra", "Probability and Statistics", "Discrete Mathematics"],
+          "csFundamentals": ["Data Structures", "Operating Systems", "Computer Networks", "Database Systems", "Computer Architecture"],
+          "advanced": ["Machine Learning", "Deep Learning", "Computer Vision", "Natural Language Processing", "Multimedia Technology"],
+          "general": ["Academic English", "Research Writing", "Innovation and Entrepreneurship", "Communication Skills"]
+        },
+        "awards": ["University Scholarship", "Campus Innovation Competition Award", "Outstanding Student Leader"],
+        "volunteering": ["Freshman onboarding volunteer", "Community STEM outreach", "Campus tech workshop volunteer tutor"]
+      }
+    }
+  ],
+  "internships": [
+    {
+      "company": "Technology Company, AI Team",
+      "role": "Algorithm Engineering Intern",
+      "start": "2025-07",
+      "end": "2025-09",
+      "location": "Hefei",
+      "summary": "Worked on visual recognition and intelligent retrieval projects, including data processing, model training, and evaluation.",
+      "detail": {
+        "companyIntro": "The team focuses on AIGC-enabled products and intelligent interaction systems across enterprise and multimodal scenarios.",
+        "roleIntro": "Responsible for experiment design, training pipeline maintenance, online performance tracking, and technical reporting.",
+        "highlights": [
+          "Built data cleaning and annotation workflows to improve training quality.",
+          "Optimized retrieval pipeline and improved online recall efficiency.",
+          "Conducted model comparison experiments and delivered evaluation reports."
+        ],
+        "tech": ["Python", "PyTorch", "OpenCV", "SQL", "Docker"],
+        "awards": ["Outstanding Intern", "Best Technical Sharing Award"],
+        "volunteering": ["Volunteer speaker for internal workshops", "University AI community outreach"]
+      }
+    }
+  ],
+  "music": {
+    "title": "Musician",
+    "intro": "I am a drummer, and I also play guitar and piano. I compose music as well.",
+    "instruments": ["Drums", "Guitar", "Piano", "Composition", "Music Production"],
+    "bandPhotos": ["/music/band-1.svg", "/music/band-2.svg", "/music/band-3.svg"],
+    "track": "/music/demo-track.wav"
+  },
   "timeline": [
     {
       "date": "2025",

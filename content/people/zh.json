@@ -1,8 +1,60 @@
 {
-  "name": "Your Name",
+  "name": "孟任巍",
   "headline": "研究与工程的交叉探索者",
   "bio": "我关注 AI 系统、产品工程与信息设计的融合，擅长把研究思路转化为清晰的产品体验。",
-  "photos": ["/avatar/portrait.svg"],
+  "photos": ["/avatar/my_profile.JPG"],
+  "education": [
+    {
+      "degree": "本科（工学学士）",
+      "school": "安徽大学",
+      "major": "数字媒体技术",
+      "start": "2023",
+      "end": "2027",
+      "description": "本科阶段系统学习算法、计算机视觉与机器学习，并参与多个科研与工程实践项目。",
+      "achievements": ["专业核心课程优秀", "科研训练项目负责人", "校级创新项目立项"],
+      "detail": {
+        "schoolIntro": "安徽大学是国家双一流建设高校，强调创新实践与跨学科融合，提供了开放的科研与工程学习环境。",
+        "majorIntro": "数字媒体技术专业聚焦计算机图形学、人机交互、智能媒体与工程实现，注重创意能力与技术能力并重。",
+        "curriculum": {
+          "math": ["高等数学", "线性代数", "概率论与数理统计", "离散数学"],
+          "csFundamentals": ["数据结构", "操作系统", "计算机网络", "数据库系统", "计算机组成原理"],
+          "advanced": ["机器学习", "深度学习", "计算机视觉", "自然语言处理", "多媒体技术"],
+          "general": ["大学英语", "学术写作", "创新创业", "心理健康教育"]
+        },
+        "awards": ["校级奖学金", "互联网+创新创业比赛校级奖", "优秀学生干部"],
+        "volunteering": ["迎新志愿服务", "社区科普活动讲解", "校园技术分享志愿讲师"]
+      }
+    }
+  ],
+  "internships": [
+    {
+      "company": "某科技公司 AI 部门",
+      "role": "算法工程实习生",
+      "start": "2025-07",
+      "end": "2025-09",
+      "location": "合肥",
+      "summary": "参与视觉识别与智能检索项目，负责数据处理、模型训练与效果评估。",
+      "detail": {
+        "companyIntro": "团队聚焦 AIGC 与智能交互产品，业务覆盖企业知识系统与多模态应用。",
+        "roleIntro": "负责模型实验设计、训练 pipeline 维护、在线效果监控和报告撰写。",
+        "highlights": [
+          "构建数据清洗与标注流程，提升训练数据质量。",
+          "优化特征检索链路，提升线上召回效率。",
+          "完成多轮模型对比实验并产出评估文档。"
+        ],
+        "tech": ["Python", "PyTorch", "OpenCV", "SQL", "Docker"],
+        "awards": ["实习优秀个人", "最佳技术分享奖"],
+        "volunteering": ["公司技术公开课志愿讲师", "高校 AI 社区共建活动"]
+      }
+    }
+  ],
+  "music": {
+    "title": "音乐人",
+    "intro": "我是一个鼓手，平时也弹吉他、钢琴，也会作曲。",
+    "instruments": ["Drums", "Guitar", "Piano", "Composition", "Music Production"],
+    "bandPhotos": ["/music/band-1.svg", "/music/band-2.svg", "/music/band-3.svg"],
+    "track": "/music/demo-track.wav"
+  },
   "timeline": [
     {
       "date": "2025",

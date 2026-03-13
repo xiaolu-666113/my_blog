@@ -1,0 +1,213 @@
+---
+title: "Group Resonance Network: Teaching EEG Emotion Recognition to Listen to the Crowd"
+date: "2026-03"
+summary: "A group-aware EEG emotion recognition framework that combines individual neural dynamics, learnable group prototypes, and multi-subject resonance modeling to improve cross-subject generalization."
+tags: ["EEG", "Emotion Recognition", "Affective Computing", "Cross-subject", "Prototype Learning", "Neural Synchrony", "PLV", "Coherence", "Transformer", "Interpretability"]
+status: "Ongoing"
+role: "First author"
+links:
+  paper: "https://example.com/paper"
+  code: "https://github.com/your-handle/grn"
+cover: "/covers/group_reasoning_workflow.png"
+---
+
+# Group Resonance Network: Teaching EEG Emotion Recognition to Listen to the Crowd
+
+EEG emotion recognition has always lived with an awkward truth: the same stimulus can evoke very different neural patterns across people. One subject looks calm, another looks excited, and a third seems to have brought entirely different brain dynamics to the party. Models trained on one group often struggle when faced with a new person.
+
+Most existing methods fight this problem by trying to make features *subject-invariant*. That is a sensible strategy, but it is only half the story.
+
+What if the key is not just to suppress differences, but also to **model what people share**?
+
+That question motivated our work on **Group Resonance Network (GRN)**.
+
+---
+
+## Why EEG emotion recognition is hard
+
+In the subject-dependent setting, EEG emotion recognition can already achieve strong results. The real challenge appears in the **cross-subject** setting, where a model must generalize to unseen individuals.
+
+The difficulty comes from three sources:
+
+1. **Inter-subject variability**: baseline brain activity differs substantially across people.
+2. **Noisy neural measurements**: EEG is rich, but also fragile.
+3. **Weak use of shared structure**: many methods treat each subject as an isolated domain.
+
+In public datasets such as **SEED** and **DEAP**, all participants watch the same emotional stimuli under aligned experimental protocols. This means the data may contain not only individual responses, but also **stimulus-locked shared neural structure**.
+
+In other words, a subject is not just a single signal. A subject is also part of a crowd responding to the same story.
+
+---
+
+## The core idea: from individual signals to group resonance
+
+GRN is built on a simple intuition:
+
+> Emotion is encoded not only in how *I* react, but also in how my neural response aligns with the *group-level pattern* evoked by the same stimulus.
+
+Instead of relying only on one subject’s feature representation, GRN introduces two complementary group-aware views:
+
+- **Learnable group prototypes**, which summarize group-consistent affective patterns.
+- **Multi-subject resonance features**, which explicitly measure synchrony between a target subject and a small reference set.
+
+This leads to a richer representation of emotion: one part personal, one part collective.
+
+---
+
+## The architecture in one sentence
+
+GRN learns three embeddings:
+
+- **F**: the individual EEG representation
+- **R**: the prototype-induced group resonance
+- **G**: the multi-subject synchrony embedding
+
+and fuses them for final emotion classification.
+
+A compact view of the fusion step is:
+
+\[
+H = \mathrm{Fusion}(F, R, G, F-R, F-G, F\odot R, F\odot G)
+\]
+
+The idea is simple: preserve what is unique, preserve what is shared, and let the model decide how to combine them.
+
+---
+
+## Step 1: encode the individual
+
+We first extract band-wise EEG features and feed them into an encoder to obtain an **individual embedding**:
+
+\[
+F = \mathrm{Enc}(X)
+\]
+
+This is the standard “what does this subject’s brain look like?” view.
+
+Many models stop here. GRN does not.
+
+---
+
+## Step 2: learn group prototypes instead of fixing them
+
+A common trick in prior work is to compare a target subject with one manually selected prototype subject. But a single prototype can be unstable, biased, or simply unrepresentative.
+
+We replace that idea with **learnable group prototypes**:
+
+\[
+\mathcal{P} = \{p_1, p_2, \dots, p_M\}
+\]
+
+These prototypes are trainable parameters, optimized jointly with the whole network. Instead of saying *this subject looks like Subject A*, the model asks:
+
+> Which latent group pattern does this subject most resemble?
+
+Through similarity scoring and attention weighting, the prototypes produce a **group-level resonance embedding**:
+
+\[
+R = \sum_m \alpha_m p_m
+\]
+
+This gives the model a flexible group memory rather than a brittle fixed reference.
+
+---
+
+## Step 3: explicitly measure resonance with other subjects
+
+Prototypes are abstract. We also want a signal-level view.
+
+So GRN constructs a **multi-subject resonance tensor** by comparing the target subject with a small reference set from the training fold. For each reference subject, we compute:
+
+- **PLV** for phase synchrony
+- **Coherence** for frequency-domain coupling
+
+These pairwise matrices are stacked into a tensor and passed through a resonance encoder:
+
+\[
+G = \mathrm{ResEnc}(M_{\text{res}})
+\]
+
+If \(R\) is the model’s learned memory of the crowd, then \(G\) is the crowd speaking directly through synchrony.
+
+---
+
+## Why both prototypes and resonance matter
+
+The two branches play different roles.
+
+### Learnable prototypes
+They capture **compact, trainable, group-consistent structure** in embedding space.
+
+### Multi-subject resonance
+It captures **explicit synchrony** at the signal level.
+
+One is abstract and semantic.  
+The other is physiological and structural.
+
+Together, they make the model less likely to overfit to person-specific noise.
+
+---
+
+## Experimental design
+
+We evaluate GRN on two public EEG emotion benchmarks:
+
+- **SEED** for three-class emotion recognition
+- **DEAP** for valence and arousal classification
+
+We use both:
+
+- **Subject-dependent evaluation**
+- **Subject-independent LOSO evaluation**
+
+The second one is the real battlefield. It tests whether the model can recognize emotion in a person it has never seen before.
+
+To make the design rigorous, the reference set used for resonance computation is always selected from the **training fold only**, avoiding leakage from the test subject.
+
+We also perform:
+
+- baseline comparison
+- ablation study
+- sensitivity analysis over prototype number and reference number
+- confusion matrix analysis
+- training dynamics visualization
+
+---
+
+## What we found
+
+The empirical story is encouraging.
+
+GRN consistently improves over strong baselines, especially in the cross-subject setting. Ablation experiments show that:
+
+- removing prototypes hurts performance
+- removing multi-subject resonance also hurts performance
+- combining both gives the best result
+
+This suggests that group-aware modeling is not a cosmetic addition. It is a genuine source of performance gain.
+
+---
+
+## What this work really means
+
+Technically, GRN is a new EEG emotion recognition framework.
+
+Conceptually, it argues for something broader:
+
+> Affective brain signals should not always be modeled as isolated personal traces; they can also be understood as partially shared responses embedded in a group context.
+
+This is where the phrase **group resonance** comes from. The model does not merely ask *what is this person feeling?* It also asks *how does this person resonate with others under the same emotional scene?*
+
+That shift, while small in wording, changes the entire modeling perspective.
+
+---
+
+## Closing thoughts
+
+EEG is often described as noisy, variable, and frustrating. All of that is true. But it is also collective in ways we may have underused. When multiple people watch the same emotional stimulus, their brains are not identical, yet they are not independent islands either.
+
+GRN is our attempt to turn that observation into a learning principle.
+
+If individual EEG features are a solo voice, group resonance is the choir behind it.
+
+And sometimes, the choir helps us hear the melody more clearly.

@@ -2,7 +2,7 @@ import { ResearchCard } from "@/components/cards/ResearchCard";
 import { getAllResearch } from "@/lib/content/research";
 import { createMetadata } from "@/lib/seo/metadata";
 import { getDictionary } from "@/lib/i18n/routing";
-import { isLocale, type Locale } from "@/lib/i18n/locales";
+import { isLocale } from "@/lib/i18n/locales";
 
 export async function generateMetadata({
   params,

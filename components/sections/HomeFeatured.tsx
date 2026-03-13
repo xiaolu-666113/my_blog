@@ -14,10 +14,13 @@ export function HomeFeatured({
   return (
     <section className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
+        <h2 className="inline-flex items-center gap-2 text-xl font-semibold tracking-tight">
+          <span className="h-2 w-2 rounded-full bg-primary" />
+          {title}
+        </h2>
         <Link
           href={viewAllHref}
-          className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          className="rounded-full border border-border/60 bg-card/70 px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
           {viewAllLabel}
         </Link>

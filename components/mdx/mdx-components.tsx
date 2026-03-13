@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image, { type ImageProps } from "next/image";
 import Link from "next/link";
 import { Callout } from "@/components/mdx/Callout";
@@ -60,15 +61,18 @@ export const mdxComponents = {
       {...props}
     />
   ),
-  img: (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
+  img: ({
+    alt = "",
+    ...props
+  }: React.ImgHTMLAttributes<HTMLImageElement>) => (
     <img
-      alt={props.alt ?? ""}
+      alt={alt}
       className="mt-6 rounded-2xl border border-border/60"
       {...props}
     />
   ),
-  Image: (props: ImageProps) => (
-    <Image className="rounded-2xl border border-border/60" {...props} />
+  Image: ({ alt, ...props }: ImageProps) => (
+    <Image alt={alt} className="rounded-2xl border border-border/60" {...props} />
   ),
   Callout,
 };

@@ -2,7 +2,7 @@ import { ArticleCard } from "@/components/cards/ArticleCard";
 import { getAllArticles } from "@/lib/content/articles";
 import { createMetadata } from "@/lib/seo/metadata";
 import { getDictionary } from "@/lib/i18n/routing";
-import { isLocale, type Locale } from "@/lib/i18n/locales";
+import { isLocale } from "@/lib/i18n/locales";
 
 export async function generateMetadata({
   params,

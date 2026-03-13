@@ -1,0 +1,25 @@
+<svg width="960" height="640" viewBox="0 0 960 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="960" y2="640" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111827"/>
+      <stop offset="1" stop-color="#312E81"/>
+    </linearGradient>
+    <radialGradient id="light2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(760 140) rotate(170) scale(460 260)">
+      <stop stop-color="#A78BFA" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#A78BFA" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="960" height="640" rx="36" fill="url(#bg2)"/>
+  <rect width="960" height="640" rx="36" fill="url(#light2)"/>
+  <g opacity="0.32" stroke="#F8FAFC" stroke-width="3">
+    <path d="M90 170H870"/>
+    <path d="M90 220H870"/>
+    <path d="M90 270H870"/>
+    <path d="M90 320H870"/>
+    <path d="M90 370H870"/>
+  </g>
+  <rect x="100" y="420" width="760" height="130" rx="28" fill="#020617" fill-opacity="0.56"/>
+  <text x="132" y="500" fill="#E2E8F0" font-family="system-ui" font-size="42" font-weight="700">Live Rehearsal 02</text>
+  <circle cx="190" cy="132" r="20" fill="#F59E0B"/>
+  <circle cx="252" cy="132" r="14" fill="#34D399"/>
+</svg>
