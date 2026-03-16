@@ -15,6 +15,7 @@ export const en = {
       "I build systems that translate curiosity into usable tools — from papers to production.",
     ctaResearch: "Explore Research",
     ctaArticles: "Read Articles",
+    ctaResearchResume: "Research CV",
     aboutKicker: "About",
     aboutTitle: "A pragmatic builder with a research mindset.",
     aboutBody:

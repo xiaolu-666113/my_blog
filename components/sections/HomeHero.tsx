@@ -44,6 +44,15 @@ export function HomeHero({
             <Button asChild variant="outline" className="border-white/70 bg-white/65 backdrop-blur hover:bg-white dark:border-white/20 dark:bg-white/10 dark:hover:bg-white/15">
               <Link href={`/${locale}/articles`}>{dict.home.ctaArticles}</Link>
             </Button>
+            <Button asChild variant="outline" className="border-white/70 bg-white/65 backdrop-blur hover:bg-white dark:border-white/20 dark:bg-white/10 dark:hover:bg-white/15">
+              <Link
+                href="/research/research-CV.pdf"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {dict.home.ctaResearchResume}
+              </Link>
+            </Button>
           </div>
         </div>
 

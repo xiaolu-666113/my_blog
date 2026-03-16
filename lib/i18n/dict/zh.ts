@@ -15,6 +15,7 @@ export const zh = {
       "我关注 AI、系统与产品交叉的机会，把好奇转化为清晰的工具与体验。",
     ctaResearch: "查看科研",
     ctaArticles: "阅读文章",
+    ctaResearchResume: "科研简历",
     aboutKicker: "关于",
     aboutTitle: "研究导向的实践者，专注把复杂变清晰。",
     aboutBody:
