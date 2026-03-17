@@ -20,6 +20,9 @@ export function ProjectCard({
           <span className="rounded-full border border-border/70 bg-white/70 px-2.5 py-1 text-muted-foreground dark:bg-white/10">
             {formatDate(item.date, locale)}
           </span>
+          {item.status && (
+            <Badge variant="secondary">{item.status}</Badge>
+          )}
         </div>
         <Link
           href={`/${locale}/projects/${item.slug}`}

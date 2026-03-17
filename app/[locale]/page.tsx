@@ -13,6 +13,7 @@ import { getAllProjects } from "@/lib/content/projects";
 import { getAllArticles } from "@/lib/content/articles";
 import { getPerson } from "@/lib/content/people";
 import { createMetadata } from "@/lib/seo/metadata";
+import { personJsonLd, websiteJsonLd } from "@/lib/seo/jsonld";
 import { getDictionary } from "@/lib/i18n/routing";
 import { isLocale } from "@/lib/i18n/locales";
 import { Button } from "@/components/ui/button";
@@ -48,9 +49,23 @@ export default async function HomePage({
   const person = getPerson(resolvedLocale);
   const portrait = person.photos[0] ?? "/avatar/portrait.svg";
   const education = person.education ?? [];
+  const websiteLd = websiteJsonLd(resolvedLocale);
+  const personLd = personJsonLd({
+    locale: resolvedLocale,
+    description: person.bio,
+    image: portrait,
+  });
 
   return (
     <div className="space-y-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }}
+      />
       <SectionScene>
         <HomeHero
           dict={dict}

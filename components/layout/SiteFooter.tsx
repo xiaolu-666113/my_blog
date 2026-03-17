@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { siteConfig } from "@/lib/seo/metadata";
+import { isPublishableUrl, siteConfig } from "@/lib/seo/metadata";
 import type { Dictionary } from "@/lib/i18n/routing";
 
 export function SiteFooter({ dict }: { dict: Dictionary }) {
@@ -13,7 +13,7 @@ export function SiteFooter({ dict }: { dict: Dictionary }) {
     { label: "GitHub", href: siteConfig.links.github },
     { label: "LinkedIn", href: siteConfig.links.linkedin },
     { label: "Scholar", href: siteConfig.links.scholar },
-  ];
+  ].filter((item) => item.href.startsWith("mailto:") || isPublishableUrl(item.href));
 
   return (
     <footer className="mt-16 border-t border-border/60 bg-gradient-to-r from-background/40 via-muted/30 to-background/40">

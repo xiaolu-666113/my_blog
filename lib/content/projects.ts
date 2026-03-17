@@ -7,6 +7,7 @@ export type ProjectFrontmatter = {
   summary: string;
   tags: string[];
   stack: string[];
+  status?: string;
   repo?: string;
   demo?: string;
   cover?: string;

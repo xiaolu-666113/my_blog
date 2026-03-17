@@ -1,5 +1,5 @@
 import { getPerson } from "@/lib/content/people";
-import { createMetadata } from "@/lib/seo/metadata";
+import { createMetadata, isPublishableUrl } from "@/lib/seo/metadata";
 import { getDictionary } from "@/lib/i18n/routing";
 import { isLocale } from "@/lib/i18n/locales";
 
@@ -28,8 +28,11 @@ export default async function ContactPage({
   const resolvedLocale = isLocale(locale) ? locale : "zh";
   const dict = getDictionary(resolvedLocale);
   const person = getPerson(resolvedLocale);
-  const emailContacts = person.contacts.filter((contact) => contact.label === "Email");
-  const otherContacts = person.contacts.filter((contact) => contact.label !== "Email");
+  const publicContacts = person.contacts.filter(
+    (contact) => contact.label === "Email" || isPublishableUrl(contact.url),
+  );
+  const emailContacts = publicContacts.filter((contact) => contact.label === "Email");
+  const otherContacts = publicContacts.filter((contact) => contact.label !== "Email");
 
   return (
     <div className="space-y-6">

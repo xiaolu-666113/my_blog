@@ -2,7 +2,8 @@ import Image from "next/image";
 import { AboutTimeline } from "@/components/sections/AboutTimeline";
 import { Badge } from "@/components/ui/badge";
 import { getPerson } from "@/lib/content/people";
-import { createMetadata } from "@/lib/seo/metadata";
+import { createMetadata, isPublishableUrl } from "@/lib/seo/metadata";
+import { personJsonLd, profilePageJsonLd } from "@/lib/seo/jsonld";
 import { getDictionary } from "@/lib/i18n/routing";
 import { isLocale } from "@/lib/i18n/locales";
 
@@ -32,11 +33,32 @@ export default async function AboutPage({
   const dict = getDictionary(resolvedLocale);
   const person = getPerson(resolvedLocale);
   const photo = person.photos[0];
-  const emailContacts = person.contacts.filter((contact) => contact.label === "Email");
-  const otherContacts = person.contacts.filter((contact) => contact.label !== "Email");
+  const publicContacts = person.contacts.filter(
+    (contact) => contact.label === "Email" || isPublishableUrl(contact.url),
+  );
+  const emailContacts = publicContacts.filter((contact) => contact.label === "Email");
+  const otherContacts = publicContacts.filter((contact) => contact.label !== "Email");
+  const personLd = personJsonLd({
+    locale: resolvedLocale,
+    description: person.bio,
+    image: photo,
+  });
+  const profileLd = profilePageJsonLd({
+    locale: resolvedLocale,
+    description: person.bio,
+    image: photo,
+  });
 
   return (
     <div className="space-y-10">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(profileLd) }}
+      />
       <div className="grid gap-8 lg:grid-cols-[240px_1fr]">
         <div className="flex flex-col items-start gap-4">
           <div className="relative h-60 w-52 overflow-hidden rounded-3xl border border-border/60">

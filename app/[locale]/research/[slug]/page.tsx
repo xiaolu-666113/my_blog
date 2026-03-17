@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { MdxRenderer } from "@/components/mdx/MdxRenderer";
 import { getAllResearch, getResearchBySlug } from "@/lib/content/research";
-import { createMetadata, siteConfig } from "@/lib/seo/metadata";
+import { createMetadata, isPublishableUrl, siteConfig } from "@/lib/seo/metadata";
 import { projectJsonLd } from "@/lib/seo/jsonld";
 import { formatDate } from "@/lib/utils/formatDate";
 import { getDictionary } from "@/lib/i18n/routing";
@@ -82,6 +82,10 @@ export default async function ResearchDetailPage({
     ).toString(),
     image: entry.cover,
   });
+  const paperLink = isPublishableUrl(entry.links?.paper) ? entry.links?.paper : undefined;
+  const codeLink = isPublishableUrl(entry.links?.code) ? entry.links?.code : undefined;
+  const demoLink = isPublishableUrl(entry.links?.demo) ? entry.links?.demo : undefined;
+  const posterLink = isPublishableUrl(entry.links?.poster) ? entry.links?.poster : undefined;
 
   return (
     <article className="space-y-10">
@@ -121,11 +125,11 @@ export default async function ResearchDetailPage({
             </Badge>
           ))}
         </div>
-        {entry.links && (
+        {paperLink || codeLink || demoLink || posterLink ? (
           <div className="flex flex-wrap gap-3 text-sm">
-            {entry.links.paper && (
+            {paperLink && (
               <a
-                href={entry.links.paper}
+                href={paperLink}
                 className="font-medium underline-offset-4 hover:underline"
                 target="_blank"
                 rel="noreferrer"
@@ -133,9 +137,9 @@ export default async function ResearchDetailPage({
                 {dict.links.paper}
               </a>
             )}
-            {entry.links.code && (
+            {codeLink && (
               <a
-                href={entry.links.code}
+                href={codeLink}
                 className="font-medium underline-offset-4 hover:underline"
                 target="_blank"
                 rel="noreferrer"
@@ -143,9 +147,9 @@ export default async function ResearchDetailPage({
                 {dict.links.code}
               </a>
             )}
-            {entry.links.demo && (
+            {demoLink && (
               <a
-                href={entry.links.demo}
+                href={demoLink}
                 className="font-medium underline-offset-4 hover:underline"
                 target="_blank"
                 rel="noreferrer"
@@ -153,9 +157,9 @@ export default async function ResearchDetailPage({
                 {dict.links.demo}
               </a>
             )}
-            {entry.links.poster && (
+            {posterLink && (
               <a
-                href={entry.links.poster}
+                href={posterLink}
                 className="font-medium underline-offset-4 hover:underline"
                 target="_blank"
                 rel="noreferrer"
@@ -164,7 +168,7 @@ export default async function ResearchDetailPage({
               </a>
             )}
           </div>
-        )}
+        ) : null}
       </header>
       <section className="max-w-3xl">
         <MdxRenderer source={entry.content} />

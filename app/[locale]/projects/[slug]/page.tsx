@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { MdxRenderer } from "@/components/mdx/MdxRenderer";
 import { getAllProjects, getProjectBySlug } from "@/lib/content/projects";
-import { createMetadata, siteConfig } from "@/lib/seo/metadata";
+import { createMetadata, isPublishableUrl, siteConfig } from "@/lib/seo/metadata";
 import { projectJsonLd } from "@/lib/seo/jsonld";
 import { formatDate } from "@/lib/utils/formatDate";
 import { getDictionary } from "@/lib/i18n/routing";
@@ -82,6 +82,8 @@ export default async function ProjectDetailPage({
     ).toString(),
     image: entry.cover,
   });
+  const repoLink = isPublishableUrl(entry.repo) ? entry.repo : undefined;
+  const demoLink = isPublishableUrl(entry.demo) ? entry.demo : undefined;
 
   return (
     <article className="space-y-10">
@@ -111,6 +113,9 @@ export default async function ProjectDetailPage({
         )}
         <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
           <span>{formatDate(entry.date, resolvedLocale)}</span>
+          {entry.status && (
+            <Badge variant="secondary">{entry.status}</Badge>
+          )}
         </div>
         <div className="flex flex-wrap gap-2">
           {entry.tags.map((tag) => (
@@ -126,28 +131,30 @@ export default async function ProjectDetailPage({
             </Badge>
           ))}
         </div>
-        <div className="flex flex-wrap gap-3 text-sm">
-          {entry.repo && (
-            <a
-              href={entry.repo}
-              className="font-medium underline-offset-4 hover:underline"
-              target="_blank"
-              rel="noreferrer"
-            >
-              {dict.labels.repo}
-            </a>
-          )}
-          {entry.demo && (
-            <a
-              href={entry.demo}
-              className="font-medium underline-offset-4 hover:underline"
-              target="_blank"
-              rel="noreferrer"
-            >
-              {dict.labels.demo}
-            </a>
-          )}
-        </div>
+        {repoLink || demoLink ? (
+          <div className="flex flex-wrap gap-3 text-sm">
+            {repoLink && (
+              <a
+                href={repoLink}
+                className="font-medium underline-offset-4 hover:underline"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {dict.labels.repo}
+              </a>
+            )}
+            {demoLink && (
+              <a
+                href={demoLink}
+                className="font-medium underline-offset-4 hover:underline"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {dict.labels.demo}
+              </a>
+            )}
+          </div>
+        ) : null}
       </header>
       <section className="max-w-3xl">
         <MdxRenderer source={entry.content} />
