@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArrowUpRight, Code2, FileText, MonitorPlay, Presentation } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { MdxRenderer } from "@/components/mdx/MdxRenderer";
 import { getAllResearch, getResearchBySlug } from "@/lib/content/research";
@@ -86,6 +87,12 @@ export default async function ResearchDetailPage({
   const codeLink = isPublishableUrl(entry.links?.code) ? entry.links?.code : undefined;
   const demoLink = isPublishableUrl(entry.links?.demo) ? entry.links?.demo : undefined;
   const posterLink = isPublishableUrl(entry.links?.poster) ? entry.links?.poster : undefined;
+  const linkItems = [
+    paperLink ? { href: paperLink, label: dict.links.paper, icon: FileText } : null,
+    codeLink ? { href: codeLink, label: dict.links.code, icon: Code2 } : null,
+    demoLink ? { href: demoLink, label: dict.links.demo, icon: MonitorPlay } : null,
+    posterLink ? { href: posterLink, label: dict.links.poster, icon: Presentation } : null,
+  ].filter(Boolean);
 
   return (
     <article className="space-y-10">
@@ -125,48 +132,25 @@ export default async function ResearchDetailPage({
             </Badge>
           ))}
         </div>
-        {paperLink || codeLink || demoLink || posterLink ? (
+        {linkItems.length > 0 ? (
           <div className="flex flex-wrap gap-3 text-sm">
-            {paperLink && (
-              <a
-                href={paperLink}
-                className="font-medium underline-offset-4 hover:underline"
-                target="_blank"
-                rel="noreferrer"
-              >
-                {dict.links.paper}
-              </a>
-            )}
-            {codeLink && (
-              <a
-                href={codeLink}
-                className="font-medium underline-offset-4 hover:underline"
-                target="_blank"
-                rel="noreferrer"
-              >
-                {dict.links.code}
-              </a>
-            )}
-            {demoLink && (
-              <a
-                href={demoLink}
-                className="font-medium underline-offset-4 hover:underline"
-                target="_blank"
-                rel="noreferrer"
-              >
-                {dict.links.demo}
-              </a>
-            )}
-            {posterLink && (
-              <a
-                href={posterLink}
-                className="font-medium underline-offset-4 hover:underline"
-                target="_blank"
-                rel="noreferrer"
-              >
-                {dict.links.poster}
-              </a>
-            )}
+            {linkItems.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-card/80 px-4 py-2 font-medium text-foreground shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/35 hover:bg-primary/8 hover:text-primary dark:bg-white/5"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Icon className="size-4" />
+                  <span>{item.label}</span>
+                  <ArrowUpRight className="size-3.5 opacity-70" />
+                </a>
+              );
+            })}
           </div>
         ) : null}
       </header>
