@@ -87,12 +87,24 @@ export default async function ResearchDetailPage({
   const codeLink = isPublishableUrl(entry.links?.code) ? entry.links?.code : undefined;
   const demoLink = isPublishableUrl(entry.links?.demo) ? entry.links?.demo : undefined;
   const posterLink = isPublishableUrl(entry.links?.poster) ? entry.links?.poster : undefined;
-  const linkItems = [
-    paperLink ? { href: paperLink, label: dict.links.paper, icon: FileText } : null,
-    codeLink ? { href: codeLink, label: dict.links.code, icon: Code2 } : null,
-    demoLink ? { href: demoLink, label: dict.links.demo, icon: MonitorPlay } : null,
-    posterLink ? { href: posterLink, label: dict.links.poster, icon: Presentation } : null,
-  ].filter(Boolean);
+  const linkItems: Array<{
+    href: string;
+    label: string;
+    icon: typeof FileText;
+  }> = [];
+
+  if (paperLink) {
+    linkItems.push({ href: paperLink, label: dict.links.paper, icon: FileText });
+  }
+  if (codeLink) {
+    linkItems.push({ href: codeLink, label: dict.links.code, icon: Code2 });
+  }
+  if (demoLink) {
+    linkItems.push({ href: demoLink, label: dict.links.demo, icon: MonitorPlay });
+  }
+  if (posterLink) {
+    linkItems.push({ href: posterLink, label: dict.links.poster, icon: Presentation });
+  }
 
   return (
     <article className="space-y-10">
