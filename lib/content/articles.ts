@@ -7,6 +7,8 @@ export type ArticleFrontmatter = {
   summary: string;
   tags: string[];
   cover?: string;
+  href?: string;
+  theme?: "default" | "purple";
 };
 
 export type Article = ArticleFrontmatter & { slug: string };
@@ -19,12 +21,45 @@ function sortByDateDesc(a: { date: string }, b: { date: string }) {
   return new Date(b.date).getTime() - new Date(a.date).getTime();
 }
 
+function getStaticArticles(locale: Locale): Article[] {
+  if (locale === "zh") {
+    return [
+      {
+        slug: "math-model-pre",
+        title: "AI 教程：数学建模与智能方法实战指南",
+        date: "2026-03-26",
+        summary:
+          "一套面向数学建模与 AI 实战的最新教程，涵盖 Agent、自动化工作流与竞赛导向方法设计。",
+        tags: ["Tutorial", "AI", "Math Modeling"],
+        href: "/math_model_pre/index.html",
+        theme: "purple",
+      },
+    ];
+  }
+
+  return [
+    {
+      slug: "math-model-pre",
+      title: "AI Tutorial: Mathematical Modeling and Intelligent Methods",
+      date: "2026-03-26",
+      summary:
+        "A latest hands-on tutorial for AI-assisted mathematical modeling, covering agents, workflow automation, and competition-oriented methodology.",
+      tags: ["Tutorial", "AI", "Math Modeling"],
+      href: "/math_model_pre/index.html",
+      theme: "purple",
+    },
+  ];
+}
+
 export function getAllArticles(locale: Locale): Article[] {
-  return getAllMdx<ArticleFrontmatter>("articles", locale)
-    .map((item) => ({
+  return [
+    ...getAllMdx<ArticleFrontmatter>("articles", locale).map((item) => ({
       ...item.data,
       slug: item.slug,
-    }))
+      theme: item.data.theme ?? "default",
+    })),
+    ...getStaticArticles(locale),
+  ]
     .sort(sortByDateDesc);
 }
 
