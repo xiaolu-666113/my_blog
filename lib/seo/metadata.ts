@@ -36,7 +36,7 @@ export const siteConfig = {
       "JingShangPiao@gmail.com",
       "R32314095@stu.ahu.edu.cn",
     ],
-    github: "",
+    github: "https://github.com/renweimeng",
     linkedin: "",
     scholar: "https://scholar.google.com/citations?user=kbo7-WcAAAAJ&hl",
   },
