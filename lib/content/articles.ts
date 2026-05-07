@@ -25,6 +25,16 @@ function getStaticArticles(locale: Locale): Article[] {
   if (locale === "zh") {
     return [
       {
+        slug: "rasterlab",
+        title: "RasterLab：光栅化算法可视化教程",
+        date: "2026-05-07",
+        summary:
+          "一个面向计算机图形学复习的交互式算法实验室，支持 DDA、Bresenham、圆、多边形扫描线、区域填充、字符与 OpenGL 图元模式可视化。",
+        tags: ["Tutorial", "Computer Graphics", "Rasterization"],
+        href: "/zh/articles/rasterlab",
+        theme: "purple",
+      },
+      {
         slug: "math-model-pre",
         title: "AI 教程：数学建模与智能方法实战指南",
         date: "2026-03-26",
@@ -38,6 +48,16 @@ function getStaticArticles(locale: Locale): Article[] {
   }
 
   return [
+    {
+      slug: "rasterlab",
+      title: "RasterLab: Interactive Rasterization Tutorial",
+      date: "2026-05-07",
+      summary:
+        "An interactive computer graphics lab for rasterization algorithms, covering DDA, Bresenham, circles, scanline polygons, region filling, fonts, and OpenGL primitive modes.",
+      tags: ["Tutorial", "Computer Graphics", "Rasterization"],
+      href: "/en/articles/rasterlab",
+      theme: "purple",
+    },
     {
       slug: "math-model-pre",
       title: "AI Tutorial: Mathematical Modeling and Intelligent Methods",
